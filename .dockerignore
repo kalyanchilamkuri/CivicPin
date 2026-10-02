@@ -1,0 +1,23 @@
+# Build context exclusions. Note the compose services build from
+# ./Code/civicpin_django, which has its own .dockerignore.
+.git
+.vscode
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+db.sqlite3
+staticfiles/
+
+# Archived Node stack
+Code/legacy_nodejs/
+node_modules/
+.next/
+
+# Secrets
+.env
+.env.*
+!.env.example
