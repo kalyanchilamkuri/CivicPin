@@ -1,0 +1,12 @@
+.konva-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* Allows interaction with elements underneath */
+}
+
+canvas {
+    background-color: transparent !important;
+}

@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;1000&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.Toastify__toast--success {
+  background: linear-gradient(135deg, #000000, #0c3b6a) !important; /* Black to Blue Gradient */
+  color: #ffffff !important;
+  font-weight: bold !important;
+  border-radius: 10px !important;
+  padding: 15px !important;
+  text-align: center !important;
+  box-shadow: 0px 0px 10px #1E90FF !important;
+}
+
+.Toastify__progress-bar {
+  background: #267bcf !important; /* Blue progress bar */
+}
+
+.Toastify__toast--error {
+  background: linear-gradient(135deg, #4f4848, #590303) !important; /* Dark Red to Bright Red Gradient */
+  color: #ffffff !important;
+  font-weight: bold !important;
+  border-radius: 10px !important;
+  padding: 15px !important;
+  text-align: center !important;
+  box-shadow: 0px 0px 10px #7b1818 !important; /* Orange-Red Glow */
+}
+
+/* Add to k.css */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari and Opera */
+  }
+
