@@ -1,0 +1,29 @@
+# Core
+Django>=5.2,<5.3
+djangorestframework>=3.16,<4.0
+django-cors-headers>=4.9,<5.0
+
+# Auth
+PyJWT>=2.10,<3.0
+google-auth>=2.40,<3.0
+
+# Configuration, media, HTTP
+python-dotenv>=1.1,<2.0
+Pillow>=11.0
+requests>=2.32,<3.0
+
+# Static files in production
+whitenoise>=6.9,<7.0
+
+# PostgreSQL driver — needed when DATABASE_URL points at Postgres (the
+# docker compose stack does). Harmless on a SQLite-only install.
+psycopg[binary]>=3.2,<4.0
+
+# Shared cache for OTPs / rate limits / AI results across workers. Only used
+# when REDIS_URL is set; the docker compose stack sets it.
+redis>=5.0,<7.0
+
+# Optional: production WSGI server. The Dockerfile installs gunicorn itself;
+# on Windows use waitress instead.
+# gunicorn>=23.0 ; sys_platform != "win32"
+# waitress>=3.0 ; sys_platform == "win32"
