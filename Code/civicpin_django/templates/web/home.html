@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+<div id="navC" class="bg-black pt-4 md:pt-8 pb-2 md:pb-4 sticky top-0 z-[999]">
+  {% include "includes/navbar.html" %}
+</div>
+
+<!-- ============================ Rotating globe ============================ -->
+<div class="z-10 h-[50vh] md:h-[70vh] lg:h-[80vh]" style="margin-top:0; padding:0;">
+  <div id="globeViz" class="z-[1000] cursor-pointer w-full h-full"></div>
+</div>
+
+<div class="bg-black py-8 md:py-16 px-4 text-white" style="margin-top:-1px;">
+  <div class="max-w-7xl mx-auto">
+
+    <div class="text-center mb-8 md:mb-16">
+      <h1 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
+        <span class="gradient-text">
+          CivicPin &mdash; India&rsquo;s First Crowdsourced Infrastructure Platform
+        </span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">
+        Contribute to improving infrastructure around you and be a part of your
+        community&rsquo;s development.
+      </p>
+    </div>
+
+    <!-- ============================ Feature cards ============================ -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 mb-8 md:mb-16">
+
+      <div class="bg-gray-800/50 backdrop-blur-lg p-6 md:p-8 rounded-2xl border border-gray-700/50 shadow-xl hover:scale-105 transition-all duration-300 group">
+        <div class="bg-blue-600/20 p-4 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-4 md:mb-6 transition-transform duration-500 group-hover:rotate-[360deg]">
+          <svg class="h-6 w-6 md:h-8 md:w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl md:text-2xl font-bold mb-2 md:mb-3 text-blue-400">Find Properties</h3>
+        <p class="text-gray-300 mb-4 md:mb-6">
+          Discover available properties in your area and get detailed information about them.
+        </p>
+        <a href="{% url 'web:property' %}"
+           class="inline-block px-4 py-2 md:px-6 md:py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base">
+          View Properties
+        </a>
+      </div>
+
+      <div class="bg-gray-800/50 backdrop-blur-lg p-6 md:p-8 rounded-2xl border border-gray-700/50 shadow-xl hover:scale-105 transition-all duration-300 group">
+        <div class="bg-purple-600/20 p-4 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-4 md:mb-6 transition-transform duration-500 group-hover:rotate-[360deg]">
+          <svg class="h-6 w-6 md:h-8 md:w-8 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <h3 class="text-xl md:text-2xl font-bold mb-2 md:mb-3 text-purple-400">View Demands</h3>
+        <p class="text-gray-300 mb-4 md:mb-6">
+          See infrastructure demands made by the community and support them.
+        </p>
+        <a href="{% url 'web:search-demands' %}"
+           class="inline-block px-4 py-2 md:px-6 md:py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm md:text-base">
+          Browse Demands
+        </a>
+      </div>
+
+      <div class="bg-gray-800/50 backdrop-blur-lg p-6 md:p-8 rounded-2xl border border-gray-700/50 shadow-xl hover:scale-105 transition-all duration-300 group">
+        <div class="bg-green-600/20 p-4 rounded-full w-12 h-12 md:w-16 md:h-16 flex items-center justify-center mb-4 md:mb-6 transition-transform duration-500 group-hover:rotate-[360deg]">
+          <svg class="h-6 w-6 md:h-8 md:w-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+          </svg>
+        </div>
+        <h3 class="text-xl md:text-2xl font-bold mb-2 md:mb-3 text-green-400">Make Requests</h3>
+        <p class="text-gray-300 mb-4 md:mb-6">
+          Request necessary infrastructure in your area and gather community support.
+        </p>
+        <a href="{% url 'web:raise-request' %}"
+           class="inline-block px-4 py-2 md:px-6 md:py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm md:text-base">
+          Raise Request
+        </a>
+      </div>
+    </div>
+
+    <!-- ============================ Nearby demands ============================ -->
+    <div class="bg-gray-800/30 backdrop-blur-lg p-6 md:p-8 rounded-2xl border border-gray-700/50 shadow-xl mb-8 md:mb-16 text-center">
+      <h2 class="text-2xl md:text-3xl font-bold mb-6 text-gray-50">~ Nearby Demands ~</h2>
+
+      <div class="relative">
+        <div id="nearby-status" class="text-gray-400 py-16">
+          <div class="flex items-center justify-center">
+            <div class="spinner h-12 w-12"></div>
+            <span class="ml-4 text-lg">Locating you&hellip;</span>
+          </div>
+        </div>
+        <div id="nearby-map" class="w-full rounded-xl overflow-hidden hidden" style="height:450px;"></div>
+        <p id="nearby-count" class="text-sm text-gray-400 mt-3 hidden"></p>
+      </div>
+    </div>
+
+    <!-- ============================ How it works ============================ -->
+    <div class="bg-gray-800/30 backdrop-blur-lg p-6 md:p-8 rounded-2xl border border-gray-700/50 shadow-xl mb-8 md:mb-16">
+      <div class="text-center">
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 md:mb-4 text-white">How It Works</h2>
+        <p class="text-gray-300 mb-6 md:mb-8 max-w-3xl mx-auto">
+          CivicPin connects citizens, government agencies, and private developers
+          to collaboratively improve infrastructure.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
+          <div class="group flex flex-col items-center p-4 transition-all duration-300 hover:bg-gray-700/20 rounded-2xl hover:scale-105 hover:shadow-lg">
+            <div class="bg-blue-600/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:animate-pulse">
+              <span class="text-xl md:text-2xl font-bold text-blue-400 group-hover:text-blue-300 transition-colors">1</span>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white group-hover:text-blue-300 transition-colors">Identify Needs</h3>
+            <p class="text-gray-400 group-hover:text-gray-200 text-center transition-colors">
+              Identify infrastructure needs in your community and create requests
+            </p>
+          </div>
+
+          <div class="group flex flex-col items-center p-4 transition-all duration-300 hover:bg-gray-700/20 rounded-2xl hover:scale-105 hover:shadow-lg">
+            <div class="bg-purple-600/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:animate-pulse">
+              <span class="text-xl md:text-2xl font-bold text-purple-400 group-hover:text-purple-300 transition-colors">2</span>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white group-hover:text-purple-300 transition-colors">Gather Support</h3>
+            <p class="text-gray-400 group-hover:text-gray-200 text-center transition-colors">
+              Community members upvote and comment on important requests
+            </p>
+          </div>
+
+          <div class="group flex flex-col items-center p-4 transition-all duration-300 hover:bg-gray-700/20 rounded-2xl hover:scale-105 hover:shadow-lg">
+            <div class="bg-green-600/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center mb-3 md:mb-4 group-hover:animate-pulse">
+              <span class="text-xl md:text-2xl font-bold text-green-400 group-hover:text-green-300 transition-colors">3</span>
+            </div>
+            <h3 class="text-lg md:text-xl font-semibold mb-2 text-white group-hover:text-green-300 transition-colors">Implementation</h3>
+            <p class="text-gray-400 group-hover:text-gray-200 text-center transition-colors">
+              Authorities and developers respond to community-backed requests
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================ Reviews ============================ -->
+    <div class="bg-black py-5">
+      <div class="p-4 sm:p-6 rounded-lg bg-zinc-950 text-white max-w-full sm:max-w-7xl pt-20 mx-auto">
+        <h2 class="text-center font-extrabold text-2xl sm:text-3xl mb-4 sm:mb-6 text-zinc-200">
+          Our Customer Reviews
+        </h2>
+
+        {% if reviews %}
+        <div class="scroller-container relative max-w-7xl overflow-hidden">
+          <ul class="scroller flex min-w-full shrink-0 flex-nowrap gap-4 py-4">
+            {# Rendered twice so the marquee loops seamlessly. #}
+            {% for pass in "12" %}
+              {% for review in reviews %}
+              <li class="relative w-[320px] sm:w-[350px] md:w-[450px] max-w-full shrink-0 rounded-2xl border border-zinc-700 bg-zinc-900 px-6 sm:px-8 py-6">
+                <blockquote>
+                  <div class="flex items-center mb-4">
+                    {% for star in "12345" %}
+                      <svg class="w-5 h-5" viewBox="0 0 24 24" stroke-width="1" stroke="white"
+                           fill="{% if forloop.counter <= review.rating %}gold{% else %}none{% endif %}">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.518 4.674a1 1 0 00.95.69h4.908c.969 0 1.371 1.24.588 1.81l-3.973 2.884a1 1 0 00-.364 1.118l1.518 4.674c.3.921-.755 1.688-1.538 1.118l-3.973-2.884a1 1 0 00-1.176 0l-3.973 2.884c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118L2.986 9.1c-.783-.57-.38-1.81.588-1.81h4.908a1 1 0 00.95-.69l1.518-4.674z"/>
+                      </svg>
+                    {% endfor %}
+                  </div>
+                  <span class="text-sm leading-relaxed font-normal text-zinc-300 italic mb-4 block whitespace-normal">
+                    &ldquo;{{ review.review }}&rdquo;
+                  </span>
+                  <div class="mt-6 flex flex-row items-center">
+                    <span class="flex flex-col gap-1">
+                      <span class="text-sm font-normal text-zinc-500">{{ review.masked_email }}</span>
+                      <span class="text-sm font-normal text-zinc-500">{{ review.created_at|date:"d/m/Y" }}</span>
+                    </span>
+                  </div>
+                </blockquote>
+              </li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+        {% else %}
+        <div class="text-center text-zinc-400 py-6">No reviews available.</div>
+        {% endif %}
+      </div>
+
+      <div class="text-center">
+        <a href="{% url 'web:rating' %}"
+           class="group inline-flex items-center justify-center text-white rounded-full px-6 py-3 shadow-lg transition-all duration-300 relative overflow-hidden mt-12 mb-8"
+           style="background: linear-gradient(45deg, #40ffaa, #4079ff);">
+          <span class="relative overflow-hidden w-full text-center">
+            <span class="block transition-all duration-300 transform group-hover:-translate-y-full group-hover:opacity-0">
+              Give us a Thumbs Up
+            </span>
+            <span class="absolute left-0 right-0 top-full opacity-0 transition-all duration-300 transform group-hover:-translate-y-full group-hover:opacity-100 text-white">
+              We Appreciate You!
+            </span>
+          </span>
+          <span class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+        </a>
+      </div>
+    </div>
+
+    {% include "includes/footer.html" %}
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.173.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.173.0/examples/jsm/"
+  }
+}
+</script>
+<script>
+  window.CIVICPIN.cloudsTexture = "{% static 'img/clouds.webp' %}";
+  window.CIVICPIN.earthDayTexture =
+    "https://cdn.jsdelivr.net/npm/three-globe@2.41.4/example/img/earth-blue-marble.jpg";
+  window.CIVICPIN.earthBumpTexture =
+    "https://cdn.jsdelivr.net/npm/three-globe@2.41.4/example/img/earth-topology.png";
+</script>
+<script type="module" src="{% static 'js/home.js' %}"></script>
+{% endblock %}
