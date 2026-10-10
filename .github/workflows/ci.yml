@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  django:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Code/civicpin_django
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: Code/civicpin_django/requirements.txt
+      - run: pip install -r requirements.txt
+      - name: Missing migrations
+        run: python manage.py makemigrations --check --dry-run
+      - name: Deploy checks
+        env:
+          DJANGO_DEBUG: 'False'
+          DJANGO_SECRET_KEY: ci-only-not-a-real-secret-key-0123456789-abcdefghijklmnopqrstuvwxyz
+          DJANGO_ALLOWED_HOSTS: example.com
+        run: python manage.py check --deploy --fail-level WARNING
+      - name: Tests
+        run: python manage.py test
+      - name: Tailwind CSS is up to date
+        run: |
+          npx --yes tailwindcss@3.4 -c tailwind/tailwind.config.js \
+            -i tailwind/input.css -o /tmp/tailwind.css --minify
+          diff -q /tmp/tailwind.css static/css/tailwind.css

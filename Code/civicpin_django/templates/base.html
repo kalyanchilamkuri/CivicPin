@@ -1,0 +1,55 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en" style="max-width:100vw; overflow-x:hidden;">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CivicPin - Your Crowd-Driven Infrastructure.">
+  <meta name="theme-color" content="#000000">
+  <title>{{ page_title|default:"CivicPin" }}</title>
+
+  <link rel="icon" href="{% static 'favicon.ico' %}" sizes="any">
+  <link rel="manifest" href="{% static 'site.webmanifest' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@400;1000&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  {# Prebuilt by tailwind/ (see tailwind/README.md); no runtime compiler. #}
+  <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  {% block head %}{% endblock %}
+</head>
+<body class="antialiased bg-black text-white font-sans">
+
+  <!-- Toast container; see static/js/app.js -->
+  <div id="toast-root" class="fixed top-4 right-4 z-[9999] flex flex-col gap-3 w-[min(92vw,22rem)] pointer-events-none"></div>
+
+  {% block body %}{% endblock %}
+
+  <script>
+    // Values the page scripts need, rendered server-side.
+    window.CIVICPIN = {
+      csrfToken: "{{ csrf_token }}",
+      mapsApiKey: "{{ GOOGLE_MAPS_API_KEY|escapejs }}",
+      mapsEnabled: {{ MAPS_ENABLED|yesno:"true,false" }},
+      googleClientId: "{{ GOOGLE_CLIENT_ID|escapejs }}",
+      aiEnabled: {{ AI_ENABLED|yesno:"true,false" }},
+      isAuthenticated: {{ user.is_authenticated|yesno:"true,false" }},
+      currentUser: {% if user.is_authenticated %}{
+        id: "{{ user.pk }}",
+        name: "{{ user.name|escapejs }}",
+        email: "{{ user.email|escapejs }}"
+      }{% else %}null{% endif %},
+      urls: {
+        api: "/api/",
+        demands: "/api/demand/",
+        properties: "/api/property/",
+        ratings: "/api/rating/",
+        auth: "/api/auth/"
+      },
+      defaultCenter: { lat: 20.5937, lng: 78.9629 }
+    };
+  </script>
+  <script src="{% static 'js/app.js' %}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

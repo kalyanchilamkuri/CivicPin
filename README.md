@@ -1,7 +1,7 @@
-# CrowdInfra: Powering Smart Infrastructure Through Community Demand
+# CivicPin: Powering Smart Infrastructure Through Community Demand
 
 ## 📌 Overview
-CrowdInfra is a crowdsourced demand-mapping platform that empowers communities to influence infrastructure development. Users can pin locations where essential services are needed, upvote demands, and help businesses and policymakers make data-driven decisions.
+CivicPin is a crowdsourced demand-mapping platform that empowers communities to influence infrastructure development. Users can pin locations where essential services are needed, upvote demands, and help businesses and policymakers make data-driven decisions.
 
 ## 🚀 Features
 - **Community-Driven Demand Mapping** – Users can pin locations and upvote service requests (e.g., hospitals, ATMs, banks, canteens).
@@ -12,47 +12,75 @@ CrowdInfra is a crowdsourced demand-mapping platform that empowers communities t
 - **User Engagement** – Users can comment on demands and share requests within their network.
 
 ## 🛠️ Tech Stack
-- **Frontend:** Next.js
-- **Backend:** Node.js, Express.js
-- **Database:** MongoDB
-- **AI Integration:** Google Gemini API
-- **Mapping:** Google Maps API
+- **Framework:** Django 5.2 (Python 3.12)
+- **API:** Django REST Framework
+- **Database:** SQLite by default, PostgreSQL in production
+- **Frontend:** Django templates + Tailwind, with Three.js for the 3D scenes
+- **AI Integration:** Google Gemini API (server-side)
+- **Mapping:** Google Maps JavaScript API
+
+The whole application — API and pages — is one Django project at
+[`Code/civicpin_django`](Code/civicpin_django). See its
+[README](Code/civicpin_django/README.md) for the API reference and the full
+configuration list.
 
 ## 📥 Installation & Setup
-1. **Clone the Repository:**
+
+1. **Clone the repository and enter the project:**
    ```sh
-   git clone https://github.com/yourusername/crowdinfra.git
-   cd crowdinfra
+   git clone https://github.com/yourusername/civicpin.git
+   cd civicpin/Code/civicpin_django
    ```
 
-2. **Setup Frontend:**
+2. **Create a virtual environment and install the dependencies:**
    ```sh
-   cd crowdinfra_frontend
-   npm install
-   ```
-   **Create a `.env` file inside `crowdinfra_frontend` with:**
-   ```
-   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=<your-google-maps-api-key>
-   ```
-   **Start the frontend server:**
-   ```sh
-   npm run dev
+   python -m venv .venv
+   .venv\Scripts\activate          # Windows
+   # source .venv/bin/activate     # macOS / Linux
+   pip install -r requirements.txt
    ```
 
-3. **Setup Backend:**
-   ```sh
-   cd ../crowdinfra_backend
-   npm install
+3. **Configure the environment.** Copy `.env.example` to `.env` and fill in
+   whichever keys you have:
    ```
-   **Create a `.env` file inside `crowdinfra_backend` with:**
-   ```
-   MONGO_URI=<your-mongodb-uri>
+   DJANGO_SECRET_KEY=<a long random string>
+   GOOGLE_MAPS_API_KEY=<your-google-maps-api-key>
    GEMINI_API_KEY=<your-google-gemini-api-key>
+   GOOGLE_CLIENT_ID=<your-google-oauth-client-id>   # optional
+   RESEND_API_KEY=<your-resend-key>                 # optional
    ```
-   **Start the backend server:**
+   Every key is optional in development: the maps, Google Sign-In and AI
+   panels disable themselves cleanly when their key is missing, and signup
+   accepts the fixed OTP `123456` when no email service is configured.
+
+4. **Set up the database and start the server:**
    ```sh
-   npm run start
+   python manage.py migrate
+   python manage.py seed_demo_data    # optional sample content
+   python manage.py runserver
    ```
+
+   The app runs at <http://localhost:8000>. `seed_demo_data` prints the demo
+   sign-in details.
+
+5. **Create an admin account** for <http://localhost:8000/admin/>:
+   ```sh
+   python manage.py createsuperuser
+   ```
+
+### Docker
+
+```sh
+docker compose up --build
+```
+
+Runs the app on port 8000 with PostgreSQL behind it.
+
+### Tests
+
+```sh
+python manage.py test
+```
 
 ## ⚙️ How It Works
 1. Users log in and pin locations where they need essential services.
@@ -70,7 +98,7 @@ CrowdInfra is a crowdsourced demand-mapping platform that empowers communities t
 
 ## 👥 Team Members
 - **Tanishq Aswar**
-- **Pranav Reddy K** 
+- **Pranav Reddy K**
 - **Mayank Mishra**
 
 ## 🎥 Demo & Screenshots

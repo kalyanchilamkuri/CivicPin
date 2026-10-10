@@ -1,25 +1,60 @@
-version: '1'
 services:
-  backend:
-    build: ./Code/crowdinfra_backend 
+  web:
+    build: ./Code/civicpin_django
     ports:
-      - "5000:5000"
+      - "8000:8000"
+    env_file:
+      - ./Code/civicpin_django/.env
     environment:
-      - NODE_ENV=development
+      - DJANGO_DEBUG=False
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,web
+      - DATABASE_URL=postgres://crowdinfra:crowdinfra@db:5432/crowdinfra
+      # Shared cache: OTP codes, rate-limit counters and AI results must be
+      # visible to every worker.
+      - REDIS_URL=redis://redis:6379/0
+      # No TLS terminator in front of this stack, so leave the redirect off.
+      - SECURE_SSL_REDIRECT=False
+      - SECURE_HSTS_SECONDS=0
     volumes:
-      - ./Code/crowdinfra_backend:/app  
-      - /app/node_modules 
-    command: ["npx", "nodemon", "server.js"]  
+      # Uploaded avatars survive container rebuilds.
+      - uploads:/app/uploads
     depends_on:
-      - frontend
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/healthz').status == 200 else 1)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
 
-  frontend:
-    build: ./Code/crowdinfra_frontend 
-    ports:
-      - "3000:3000"
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  db:
+    image: postgres:16-alpine
     environment:
-      - NODE_ENV=development
+      - POSTGRES_DB=crowdinfra
+      - POSTGRES_USER=crowdinfra
+      - POSTGRES_PASSWORD=crowdinfra
     volumes:
-      - ./Code/crowdinfra_frontend:/app  
-      - /app/node_modules  
-    command: ["npm", "run", "dev"]  
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U crowdinfra -d crowdinfra"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
+  uploads:

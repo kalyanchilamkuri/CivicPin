@@ -1,0 +1,25 @@
+# Python / Django
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+Code/civicpin_django/db.sqlite3
+Code/civicpin_django/staticfiles/
+Code/civicpin_django/uploads/*
+!Code/civicpin_django/uploads/.gitkeep
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Legacy Node stack (archived; see Code/legacy_nodejs/README.md)
+node_modules/
+.next/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log

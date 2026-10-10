@@ -1,0 +1,88 @@
+{% load static %}
+<nav class="fixed top-3 left-1/2 -translate-x-1/2 z-50
+            bg-gradient-to-br from-gray-900/70 to-gray-800/70
+            backdrop-blur-2xl shadow-lg shadow-blue-500/20
+            flex items-center justify-between
+            px-5 sm:px-10 py-3 rounded-xl
+            w-[95%] max-w-6xl border border-white/10
+            transition-all duration-500 hover:shadow-blue-500/30">
+
+  <!-- Left: logo + brand -->
+  <div class="flex items-center gap-3">
+    <a href="{% url 'web:landing' %}" class="group">
+      <div class="w-10 h-10 relative transition-all duration-300 hover:scale-110">
+        <img src="{% static 'img/logo.png' %}" alt="CivicPin"
+             class="object-contain w-10 h-10 rounded-full">
+      </div>
+    </a>
+    <a href="{% url 'web:home' %}">
+      <h1 class="text-gray-100 font-bold text-lg sm:text-xl tracking-wide">CivicPin</h1>
+    </a>
+  </div>
+
+  <!-- Center: navigation -->
+  <div class="flex items-center justify-center space-x-3 sm:space-x-8 px-2 sm:px-4">
+    {% url 'web:home' as url_home %}
+    {% url 'web:raise-request' as url_raise %}
+    {% url 'web:property' as url_property %}
+    {% url 'web:search-demands' as url_search %}
+
+    <a href="{{ url_home }}" title="Go Home"
+       class="group relative flex items-center" aria-label="Go Home">
+      <div class="relative p-2 rounded-xl transition-all duration-300 {% if request.path == url_home %}bg-gradient-to-br from-blue-500/30 to-blue-500/40 shadow-md{% else %}hover:bg-white/10{% endif %}">
+        <svg class="w-5 h-5 transition-all duration-300 {% if request.path == url_home %}text-blue-400{% else %}text-white/70 group-hover:text-white{% endif %}"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"/>
+        </svg>
+        <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded-full text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none z-50">Go Home</span>
+      </div>
+    </a>
+
+    <a href="{{ url_raise }}" title="Raise a Request"
+       class="group relative flex items-center" aria-label="Raise a Request">
+      <div class="relative p-2 rounded-xl transition-all duration-300 {% if request.path == url_raise %}bg-gradient-to-br from-blue-500/30 to-blue-500/40 shadow-md{% else %}hover:bg-white/10{% endif %}">
+        <svg class="w-5 h-5 transition-all duration-300 {% if request.path == url_raise %}text-blue-400{% else %}text-white/70 group-hover:text-white{% endif %}"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+        <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded-full text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none z-50">Raise a Request</span>
+      </div>
+    </a>
+
+    <a href="{{ url_property }}" title="Raise Property"
+       class="group relative flex items-center" aria-label="Raise Property">
+      <div class="relative p-2 rounded-xl transition-all duration-300 {% if request.path == url_property %}bg-gradient-to-br from-blue-500/30 to-blue-500/40 shadow-md{% else %}hover:bg-white/10{% endif %}">
+        <svg class="w-5 h-5 transition-all duration-300 {% if request.path == url_property %}text-blue-400{% else %}text-white/70 group-hover:text-white{% endif %}"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 19V6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2z"/>
+        </svg>
+        <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded-full text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none z-50">Raise Property</span>
+      </div>
+    </a>
+
+    <a href="{{ url_search }}" title="Search Demands"
+       class="group relative flex items-center" aria-label="Search Demands">
+      <div class="relative p-2 rounded-xl transition-all duration-300 {% if request.path == url_search %}bg-gradient-to-br from-blue-500/30 to-blue-500/40 shadow-md{% else %}hover:bg-white/10{% endif %}">
+        <svg class="w-5 h-5 transition-all duration-300 {% if request.path == url_search %}text-blue-400{% else %}text-white/70 group-hover:text-white{% endif %}"
+             fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+        </svg>
+        <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-white px-2 py-1 rounded-full text-xs opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none z-50">Search Demands</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Right: profile -->
+  <div>
+    <a href="{% url 'web:profile' %}" class="group" title="{% if user.is_authenticated %}{{ user.name }}{% else %}Sign in{% endif %}">
+      <div class="w-9 h-9 rounded-full overflow-hidden border-2 border-white/20
+                  transition-all duration-300 hover:border-blue-500/50 hover:scale-110">
+        <img src="{% if user.is_authenticated and user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'img/default-avatar.webp' %}{% endif %}"
+             alt="Profile" width="36" height="36"
+             class="object-cover w-full h-full transition-all duration-300
+                    group-hover:brightness-90 ring-1 ring-white/20 group-hover:ring-blue-500/30">
+      </div>
+    </a>
+  </div>
+</nav>
