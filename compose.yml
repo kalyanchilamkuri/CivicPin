@@ -1,0 +1,60 @@
+services:
+  web:
+    build: ./Code/civicpin_django
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./Code/civicpin_django/.env
+    environment:
+      - DJANGO_DEBUG=False
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,web
+      - DATABASE_URL=postgres://civicpin:civicpin@db:5432/civicpin
+      # Shared cache: OTP codes, rate-limit counters and AI results must be
+      # visible to every worker.
+      - REDIS_URL=redis://redis:6379/0
+      # No TLS terminator in front of this stack, so leave the redirect off.
+      - SECURE_SSL_REDIRECT=False
+      - SECURE_HSTS_SECONDS=0
+    volumes:
+      # Uploaded avatars survive container rebuilds.
+      - uploads:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/healthz').status == 200 else 1)"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=civicpin
+      - POSTGRES_USER=civicpin
+      - POSTGRES_PASSWORD=civicpin
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U civicpin -d civicpin"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pgdata:
+  uploads:
