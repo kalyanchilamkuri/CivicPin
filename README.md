@@ -97,15 +97,12 @@ python manage.py test
 - **UI/UX Improvements** – Improve interface for a smoother user experience.
 - **Scalability & Security** – Ensure a robust and secure infrastructure.
 
-## 👥 Team Members
-- **Tanishq Aswar**
-- **Pranav Reddy K**
-- **Mayank Mishra**
+## 👥 Author
+- **Kalyan Chilamkuri**
 
 ## 🎥 Demo & Screenshots
 - [Screenshots](https://drive.google.com/drive/folders/1U-NyO2vEY45Ps-9mBNcHgH2Rj7egfcXX)
 - [Live Demo](#) *(Coming Soon)*
-- [Deployed Link](https://infra-crowd.vercel.app)
 
 ---
 _This project is proprietary and not open-source. Unauthorized distribution or reproduction is prohibited._

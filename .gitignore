@@ -13,7 +13,7 @@ Code/civicpin_django/uploads/*
 .env.*
 !.env.example
 
-# Legacy Node stack (archived; see Code/legacy_nodejs/README.md)
+# Node tooling (the Tailwind CLI is run through npx)
 node_modules/
 .next/
 

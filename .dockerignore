@@ -12,8 +12,7 @@ venv/
 db.sqlite3
 staticfiles/
 
-# Archived Node stack
-Code/legacy_nodejs/
+# Node tooling
 node_modules/
 .next/
 
